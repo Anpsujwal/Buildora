@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="buildora-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="buildora-grad-accent" x1="48" y1="0" x2="0" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <!-- Background subtle rounded base -->
+  <rect width="48" height="48" rx="12" fill="#12121B"/>
+  <rect x="0.5" y="0.5" width="47" height="47" rx="11.5" stroke="rgba(255,255,255,0.1)"/>
+  
+  <!-- Interconnected geometric nodes / blocks forming a stylized modern 'B' and tech cube -->
+  <path d="M14 14H24C27.3137 14 30 16.6863 30 20C30 21.6569 29.3284 23.1569 28.2426 24.2426C29.8995 25.3284 31 27.0294 31 29C31 32.866 27.866 36 24 36H14V14Z" stroke="url(#buildora-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 25H25" stroke="url(#buildora-grad)" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Accent interconnected glowing nodes -->
+  <circle cx="34" cy="14" r="3" fill="#8B5CF6"/>
+  <circle cx="34" cy="34" r="3" fill="#3B82F6"/>
+  <path d="M30 16L32 15" stroke="rgba(139, 92, 246, 0.6)" stroke-width="2" stroke-linecap="round"/>
+</svg>
