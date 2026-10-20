@@ -58,6 +58,5 @@ export interface ValueProp {
 export interface ContactFormData {
   fullName: string;
   email: string;
-  service: string;
   projectDetails: string;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { siteConfig } from '../config/site';
 import { Mail, Send, Copy, Check, AlertCircle, Sparkles, MessageSquare } from 'lucide-react';
 import type { ContactFormData } from '../types';
@@ -7,11 +7,10 @@ interface ContactProps {
   initialService?: string;
 }
 
-export const Contact: React.FC<ContactProps> = ({ initialService }) => {
+export const Contact: React.FC<ContactProps> = () => {
   const [formData, setFormData] = useState<ContactFormData>({
     fullName: '',
     email: '',
-    service: initialService || siteConfig.contactForm.serviceOptions[0],
     projectDetails: '',
   });
 
@@ -23,13 +22,6 @@ export const Contact: React.FC<ContactProps> = ({ initialService }) => {
     text: string;
     instructions?: string;
   } | null>(null);
-
-  // Update service if changed externally
-  useEffect(() => {
-    if (initialService) {
-      setFormData((prev) => ({ ...prev, service: initialService }));
-    }
-  }, [initialService]);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.brand.contactEmail);
@@ -48,10 +40,6 @@ export const Contact: React.FC<ContactProps> = ({ initialService }) => {
       newErrors.email = 'Please enter your email address.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = 'Please provide a valid email format (e.g. name@domain.com).';
-    }
-
-    if (!formData.service) {
-      newErrors.service = 'Please select a service category.';
     }
 
     if (!formData.projectDetails.trim()) {
@@ -73,14 +61,13 @@ export const Contact: React.FC<ContactProps> = ({ initialService }) => {
 
     try {
       const recipient = siteConfig.brand.contactEmail;
-      const subject = `New Buildora Project Inquiry — ${formData.service}`;
+      const subject = `New Buildora Project Inquiry from ${formData.fullName}`;
       const body = `Hi Buildora Team,
 
 I would like to discuss a project inquiry:
 
 • Full Name: ${formData.fullName}
 • Contact Email: ${formData.email}
-• Requested Service: ${formData.service}
 
 Project Requirements & Details:
 ${formData.projectDetails}
@@ -100,7 +87,7 @@ Looking forward to hearing from you!
         type: 'success',
         text: 'Inquiry prepared in your email client!',
         instructions:
-          'Your default email application has opened with your inquiry pre-filled. Please review and click "Send" to deliver your message to ananthujwal24@gmail.com.',
+          'Your default email application has opened with your inquiry pre-filled. Please review and click "Send" to deliver your message to ananthujwal28@gmail.com.',
       });
     } catch {
       setStatusMessage({
@@ -118,7 +105,7 @@ Looking forward to hearing from you!
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[800px] h-[250px] sm:h-[450px] bg-gradient-to-r from-[#8B5CF6]/15 via-[#3B82F6]/10 to-transparent blur-[100px] sm:blur-[160px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#12121B] border border-[#8B5CF6]/30 mb-3.5 sm:mb-4 shadow-lg shadow-[#8B5CF6]/10">
@@ -139,10 +126,10 @@ Looking forward to hearing from you!
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          
+
           {/* Left Column: Direct Contact Info & Value Cards */}
           <div className="lg:col-span-5 space-y-5 sm:space-y-6">
-            
+
             {/* Direct Email Card */}
             <div className="p-5 sm:p-7 rounded-2xl bg-[#12121B] border border-white/[0.08] relative overflow-hidden shadow-xl">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#8B5CF6]/10 blur-[50px] pointer-events-none" />
@@ -229,7 +216,7 @@ Looking forward to hearing from you!
               className="p-5 sm:p-8 rounded-2xl bg-[#12121B] border border-white/[0.08] shadow-2xl relative"
             >
               <div className="space-y-4 sm:space-y-5">
-                
+
                 {/* Full Name */}
                 <div>
                   <label htmlFor="fullName" className="block text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#A1A1B5] mb-2">
@@ -244,11 +231,10 @@ Looking forward to hearing from you!
                       if (errors.fullName) setErrors({ ...errors, fullName: undefined });
                     }}
                     placeholder="e.g. Alex Morgan"
-                    className={`w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border text-base sm:text-sm text-white placeholder-[#525266] focus:outline-none transition-colors ${
-                      errors.fullName
+                    className={`w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border text-base sm:text-sm text-white placeholder-[#525266] focus:outline-none transition-colors ${errors.fullName
                         ? 'border-[#EF4444] focus:ring-1 focus:ring-[#EF4444]'
                         : 'border-white/[0.08] focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6]'
-                    }`}
+                      }`}
                   />
                   {errors.fullName && (
                     <p className="mt-1.5 text-xs text-[#EF4444] flex items-center gap-1 font-mono">
@@ -271,11 +257,10 @@ Looking forward to hearing from you!
                       if (errors.email) setErrors({ ...errors, email: undefined });
                     }}
                     placeholder="e.g. alex@university.edu"
-                    className={`w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border text-base sm:text-sm text-white placeholder-[#525266] focus:outline-none transition-colors ${
-                      errors.email
+                    className={`w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border text-base sm:text-sm text-white placeholder-[#525266] focus:outline-none transition-colors ${errors.email
                         ? 'border-[#EF4444] focus:ring-1 focus:ring-[#EF4444]'
                         : 'border-white/[0.08] focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6]'
-                    }`}
+                      }`}
                   />
                   {errors.email && (
                     <p className="mt-1.5 text-xs text-[#EF4444] flex items-center gap-1 font-mono">
@@ -284,27 +269,6 @@ Looking forward to hearing from you!
                   )}
                 </div>
 
-                {/* Service Dropdown */}
-                <div>
-                  <label htmlFor="service" className="block text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#A1A1B5] mb-2">
-                    Service Required <span className="text-[#EF4444]">*</span>
-                  </label>
-                  <select
-                    id="service"
-                    value={formData.service}
-                    onChange={(e) => {
-                      setFormData({ ...formData, service: e.target.value });
-                      if (errors.service) setErrors({ ...errors, service: undefined });
-                    }}
-                    className="w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border border-white/[0.08] text-base sm:text-sm text-white focus:outline-none focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] transition-colors"
-                  >
-                    {siteConfig.contactForm.serviceOptions.map((opt) => (
-                      <option key={opt} value={opt} className="bg-[#12121B] text-white">
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </div>
 
                 {/* Project Details Textarea */}
                 <div>
@@ -320,11 +284,10 @@ Looking forward to hearing from you!
                       if (errors.projectDetails) setErrors({ ...errors, projectDetails: undefined });
                     }}
                     placeholder="Tell us what you're building, specific tech preferences, college submission requirements, or upcoming viva deadlines..."
-                    className={`w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border text-base sm:text-sm text-white placeholder-[#525266] focus:outline-none transition-colors ${
-                      errors.projectDetails
+                    className={`w-full px-3.5 sm:px-4 py-3 rounded-xl bg-[#09090F] border text-base sm:text-sm text-white placeholder-[#525266] focus:outline-none transition-colors ${errors.projectDetails
                         ? 'border-[#EF4444] focus:ring-1 focus:ring-[#EF4444]'
                         : 'border-white/[0.08] focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6]'
-                    }`}
+                      }`}
                   />
                   {errors.projectDetails && (
                     <p className="mt-1.5 text-xs text-[#EF4444] flex items-center gap-1 font-mono">
@@ -336,11 +299,10 @@ Looking forward to hearing from you!
                 {/* Status Message */}
                 {statusMessage && (
                   <div
-                    className={`p-3.5 sm:p-4 rounded-xl text-xs leading-relaxed ${
-                      statusMessage.type === 'success'
+                    className={`p-3.5 sm:p-4 rounded-xl text-xs leading-relaxed ${statusMessage.type === 'success'
                         ? 'bg-[#34D399]/10 border border-[#34D399]/30 text-[#D1FAE5]'
                         : 'bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#FEE2E2]'
-                    }`}
+                      }`}
                   >
                     <div className="font-semibold mb-1 flex items-center gap-1.5">
                       {statusMessage.type === 'success' ? (

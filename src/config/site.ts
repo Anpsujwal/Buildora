@@ -12,16 +12,13 @@ export const siteConfig = {
     targetAudience: 'College & University Students',
     primaryTheme: 'Dark',
     footerTagline: 'Built around your ideas.',
-    contactEmail: 'ananthujwal24@gmail.com',
+    contactEmail: 'ananthujwal28@gmail.com',
   },
 
   navigation: [
     { label: 'Home', href: '#home' },
     { label: 'Services', href: '#services' },
     { label: 'Projects', href: '#projects' },
-    { label: 'Tech Stack', href: '#tech-stack' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Why Buildora', href: '#why-us' },
     { label: 'Contact', href: '#contact' },
   ],
 
